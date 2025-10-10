@@ -1,0 +1,6 @@
+Oct  9 14:00:00 mypc sshd[1111]: Failed password for invalid user lucy from 192.168.0.10 port 52022 ssh2
+Oct  9 14:00:10 mypc sshd[1112]: Failed password for invalid user lucy from 192.168.0.10 port 52022 ssh2
+Oct  9 14:00:20 mypc sshd[1113]: Failed password for invalid user lucy from 192.168.0.10 port 52022 ssh2
+Oct  9 14:00:30 mypc sshd[1114]: Failed password for invalid user lucy from 192.168.0.10 port 52022 ssh2
+Oct  9 14:00:40 mypc sshd[1115]: Failed password for invalid user lucy from 192.168.0.10 port 52022 ssh2
+Oct  9 14:02:00 mypc sshd[1116]: Accepted password for lucy from 192.168.0.10 port 52022 ssh2
