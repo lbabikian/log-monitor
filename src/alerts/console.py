@@ -25,7 +25,7 @@ def send(alert: dict, *, json_mode: bool = False) -> None:
     ip = alert.get("ip", "?")
     cnt = alert.get("count", "?")
     win = alert.get("window_seconds", "?")
-    print(f"⚠️  {msg}  [rule={rule} ip={ip} count={cnt} window={win}s]")
+    print(f"[ALERT] {msg}  [rule={rule} ip={ip} count={cnt} window={win}s]")
 
 def debug(text: str) -> None:
     """

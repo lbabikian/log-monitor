@@ -39,6 +39,7 @@ def main(argv=None):
     parser.add_argument("--follow", action="store_true", help="Follow file like tail -f")
     parser.add_argument("--window", type=int, default=60, help="Sliding window size (sec)")
     parser.add_argument("--threshold", type=int, default=5, help="Threshold for alert")
+    parser.add_argument("--json", action="store_true", help="Emit alerts as JSON (for piping to other tools)")
     args = parser.parse_args(argv)
 
     detector = FailedLoginBurst(window_seconds=args.window, threshold=args.threshold)
@@ -51,7 +52,7 @@ def main(argv=None):
 
             alert = detector.handle(ev)
             if alert:
-                alert_console.send(alert)
+                alert_console.send(alert, json_mode=args.json)
 
     except KeyboardInterrupt:
         print("\n[Log Monitor] Stopped by user.")
