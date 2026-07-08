@@ -1,5 +1,3 @@
-iniconfig==2.1.0
-packaging==25.0
-pluggy==1.6.0
-Pygments==2.19.2
-pytest==8.4.2
+# No runtime dependencies - the monitor itself only uses the Python
+# standard library (re, datetime, argparse, collections, dataclasses).
+# See requirements-dev.txt for test tooling.

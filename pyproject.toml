@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "log-monitor"
+version = "0.1.0"
+description = "Real-time SSH auth log monitor with sliding-window brute-force detection"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+[project.scripts]
+log-monitor = "src.main:main"
+
+[tool.setuptools]
+packages = ["src", "src.parsers", "src.detectors", "src.alerts"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
