@@ -10,8 +10,8 @@ Modes:
                 Triggers FailedLoginBurst with default settings.
   distributed - many IPs, a few attempts each, against one account
                 (credential stuffing / password spraying). Deliberately
-                stays under the per-IP threshold - demonstrates a known
-                blind spot of the current detector, see README "Limitations".
+                stays under the per-IP threshold, so FailedLoginBurst never
+                sees it - this is the traffic FailedLoginSpray exists for.
   mixed       - benign traffic with one embedded burst (default demo).
 
 Usage:
@@ -62,10 +62,17 @@ def gen_burst(start, ip="203.0.113.77", user="root", count=8, gap=2):
 
 
 def gen_distributed(start, user="admin", attackers=12, attempts_per_ip=2, gap=3):
+    """
+    Many source IPs, a few attempts each, all against one account.
+
+    Source IPs are assigned deterministically rather than at random: two
+    attackers drawing the same address would quietly reduce the distinct-IP
+    count and make the demo flaky.
+    """
     lines = []
     ts = start
     for a in range(attackers):
-        ip = f"198.51.100.{random.randint(2, 254)}"
+        ip = f"198.51.100.{a + 11}"
         for _ in range(attempts_per_ip):
             lines.append((ts, failed(ts, ip, user, 3000 + a)))
             ts += timedelta(seconds=gap)
@@ -96,7 +103,13 @@ def main(argv=None):
     parser.add_argument(
         "--speed", type=float, default=0.0, help="Seconds to sleep between lines (0 = dump instantly)"
     )
+    parser.add_argument(
+        "--seed", type=int, default=None, help="Seed the RNG so a run is reproducible"
+    )
     args = parser.parse_args(argv)
+
+    if args.seed is not None:
+        random.seed(args.seed)
 
     start = datetime.now()
     for _, line in build(args.mode, start):
