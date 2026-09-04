@@ -41,6 +41,10 @@ class FailedLoginBurst:
 
         count = len(dq)
         if count < self.threshold:
+            # The burst has decayed below the threshold. Clear the de-spam
+            # state so a later burst from this same IP alerts again, instead
+            # of staying gated for the lifetime of the process.
+            self.last_alert_count.pop(ip, None)
             return None
 
         # De-spam logic: send only on crossing threshold or every +step
